@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  public readonly NUM = 20;
+  public count = 20;
+  public countArray = Array.from(Array(this.count).keys());
+
+  public valueChanged(value: string): void {
+    this.count = +value;
+    this.countArray = Array.from(Array(this.count).keys());
+  }
 }

@@ -1,17 +1,29 @@
 <div class="header">
-  <label>Click to change:</label>
-  <input type="checkbox" #myCheckbox (change)="(true)" />
+  <div class="row">
+    <label>Number of boxes:</label>
+    <input
+      type="number"
+      min="0"
+      oninput="validity.valid || (value = 0);"
+      [ngModel]="count"
+      (ngModelChange)="valueChanged($event)"
+    />
+  </div>
+  <div class="row">
+    <label>Click to change:</label>
+    <input type="checkbox" #myCheckbox (change)="(true)" />
+  </div>
 </div>
 
 <ng-container *ngIf="!myCheckbox.checked">
   <p>
-    "Bad Ones" use HostListener without patching the events. When change
+    "Bad" ones use HostListener without patching the events. When change
     detection is triggered their border turns red for a while.
   </p>
   <p>Click a few times anywhere on the screen to see it in action.</p>
 
   <div class="wrapper">
-    <ng-container *ngFor="let _ of [].constructor(NUM)">
+    <ng-container *ngFor="let _i of countArray">
       <app-bad-box></app-bad-box>
     </ng-container>
   </div>
@@ -19,12 +31,12 @@
 
 <ng-container class="wrapper" *ngIf="myCheckbox.checked">
   <p>
-    "Good Ones" run HostListener events outside Angular. No change detection
+    "Good" ones run HostListener events outside Angular. No change detection
     will be triggered, hence their border won't flash red.
   </p>
   <p>Click a few times anywhere on the screen - no border blinks red.</p>
   <div class="wrapper">
-    <ng-container *ngFor="let _ of [].constructor(NUM)">
+    <ng-container *ngFor="let _i of countArray">
       <app-good-box></app-good-box>
     </ng-container>
   </div>
